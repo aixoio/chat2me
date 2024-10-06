@@ -1,8 +1,15 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+
+	"github.com/aixoio/chat2me/server/keystore"
+)
 
 func main() {
-  fmt.Println("Hello, world")
+  fmt.Println("Checking for database...")
+  if !keystore.CheckIfKeyStoreDBExists() {
+    fmt.Println("The database file was not found generating...")
+  }
 }
 
