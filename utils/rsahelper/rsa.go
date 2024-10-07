@@ -10,7 +10,7 @@ import (
 	"hash"
 	"io"
 
-	"github.com/aixoio/chat2me/utils/sha512helper"
+	"github.com/aixoio/chat2me/utils/shahelper"
 )
 
 func ExportPubkeyAsPEMStr(pubkey *rsa.PublicKey) string {
@@ -129,8 +129,8 @@ func RsaDec(pri *rsa.PrivateKey, dat []byte) []byte {
 }
 
 func RsaSign(pri *rsa.PrivateKey, dat []byte) []byte {
-	hashed := sha512helper.Sha512ToBytes(dat)
-	sig, err := rsa.SignPSS(rand.Reader, pri, crypto.SHA512, hashed, nil)
+	hashed := shahelper.Sha256ToBytes(dat)
+	sig, err := rsa.SignPSS(rand.Reader, pri, crypto.SHA256, hashed, nil)
 	if err != nil {
 		panic(err)
 	}
@@ -139,6 +139,6 @@ func RsaSign(pri *rsa.PrivateKey, dat []byte) []byte {
 
 // Returns true if success
 func RsaVerify(pub *rsa.PublicKey, sig []byte, dat []byte) bool {
-	err := rsa.VerifyPSS(pub, crypto.SHA512, sha512helper.Sha512ToBytes(dat), sig, nil)
+	err := rsa.VerifyPSS(pub, crypto.SHA256, shahelper.Sha256ToBytes(dat), sig, nil)
 	return err == nil
 }

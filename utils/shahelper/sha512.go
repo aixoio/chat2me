@@ -1,4 +1,4 @@
-package sha512helper
+package shahelper
 
 import "crypto/sha512"
 
